@@ -1,7 +1,7 @@
 import json
 import os
 import nltk
-nltk.download('punkt')
+nltk.download()
 import torch
 
 from torchtext import data
@@ -32,7 +32,7 @@ class SQuAD():
         if not os.path.exists('{}/{}l'.format(path, args.dev_file)):
             self.preprocess_file('{}/{}'.format(path, args.dev_file))
 
-        self.RAW = data.RawField
+        self.RAW = data.RawField()
         # explicit declaration for torchtext compatibility
         self.RAW.is_target = False
         self.CHAR_NESTING = data.Field(batch_first=True, tokenize=list, lower=True)
