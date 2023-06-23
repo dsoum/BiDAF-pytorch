@@ -1,6 +1,7 @@
 import json
 import os
 import nltk
+nltk.download('punkt')
 import torch
 
 from torchtext import data
@@ -8,14 +9,14 @@ from torchtext import datasets
 from torchtext.vocab import GloVe
 
 
-# def word_tokenize(tokens):
-#     return [token.replace("''", '"').replace("``", '"') for token in nltk.word_tokenize(tokens)]
-def word_tokenize(text):
-    #text = text.replace("]", " ] ")
-    #text = text.replace("[", " [ ")
-    #text = text.replace("\n", " ")
-    text = text.replace("''", '" ').replace("``", '" ')
-    return nltk.word_tokenize(text)
+def word_tokenize(tokens):
+    return [token.replace("''", '"').replace("``", '"') for token in nltk.word_tokenize(tokens)]
+# def word_tokenize(text):
+#     #text = text.replace("]", " ] ")
+#     #text = text.replace("[", " [ ")
+#     #text = text.replace("\n", " ")
+#     text = text.replace("''", '" ').replace("``", '" ')
+#     return nltk.word_tokenize(text)
 
 
 class SQuAD():
