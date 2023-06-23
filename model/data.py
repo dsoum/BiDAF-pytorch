@@ -8,8 +8,14 @@ from torchtext import datasets
 from torchtext.vocab import GloVe
 
 
-def word_tokenize(tokens):
-    return [token.replace("''", '"').replace("``", '"') for token in nltk.word_tokenize(tokens)]
+# def word_tokenize(tokens):
+#     return [token.replace("''", '"').replace("``", '"') for token in nltk.word_tokenize(tokens)]
+def word_tokenize(text):
+    #text = text.replace("]", " ] ")
+    #text = text.replace("[", " [ ")
+    #text = text.replace("\n", " ")
+    text = text.replace("''", '" ').replace("``", '" ')
+    return nltk.word_tokenize(text)
 
 
 class SQuAD():
@@ -149,3 +155,34 @@ class SQuAD():
             for line in dump:
                 json.dump(line, f)
                 print('', file=f)
+
+if __name__=="__main__":
+    import argparse
+    from time import gmtime, strftime
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--char-dim', default=8, type=int)
+    parser.add_argument('--char-channel-width', default=5, type=int)
+    parser.add_argument('--char-channel-size', default=100, type=int)
+    parser.add_argument('--context-threshold', default=400, type=int)
+    parser.add_argument('--dev-batch-size', default=100, type=int)
+    parser.add_argument('--dev-file', default='dev-v1.1.json')
+    parser.add_argument('--dropout', default=0.2, type=float)
+    parser.add_argument('--epoch', default=12, type=int)
+    parser.add_argument('--exp-decay-rate', default=0.999, type=float)
+    parser.add_argument('--gpu', default=0, type=int)
+    parser.add_argument('--hidden-size', default=100, type=int)
+    parser.add_argument('--learning-rate', default=0.5, type=float)
+    parser.add_argument('--print-freq', default=250, type=int)
+    parser.add_argument('--train-batch-size', default=60, type=int)
+    parser.add_argument('--train-file', default='train-v1.1.json')
+    parser.add_argument('--word-dim', default=100, type=int)
+    args = parser.parse_args()
+
+    print('loading SQuAD data...')
+    data = SQuAD(args)
+    setattr(args, 'char_vocab_size', len(data.CHAR.vocab))
+    setattr(args, 'word_vocab_size', len(data.WORD.vocab))
+    setattr(args, 'dataset_file', f'.data/squad/{args.dev_file}')
+    setattr(args, 'prediction_file', f'prediction{args.gpu}.out')
+    setattr(args, 'model_time', strftime('%H:%M:%S', gmtime()))
+    print('data loading complete!')
