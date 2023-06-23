@@ -3,7 +3,7 @@ import copy, json, os
 
 import torch
 from torch import nn, optim
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 from time import gmtime, strftime
 
 from model.model import BiDAF
