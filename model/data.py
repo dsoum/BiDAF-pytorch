@@ -1,7 +1,7 @@
 import json
 import os
 import nltk
-nltk.download()
+nltk.download('punkt')
 import torch
 
 from torchtext import data
