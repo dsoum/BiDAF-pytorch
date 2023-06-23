@@ -4,7 +4,7 @@ import nltk
 nltk.download('punkt')
 import torch
 
-from torchtext import data
+from torchtext.legacy import data
 from torchtext import datasets
 from torchtext.vocab import GloVe
 
